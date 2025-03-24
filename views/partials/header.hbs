@@ -1,0 +1,348 @@
+<head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">  
+  <link rel="icon" type="image/png" href="./assets/img/Untitled design (11)-modified.png">
+  <title>
+    elite POS
+  </title>
+ <!--Fonts and icons -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+   <style>
+.active {
+  background-color: #141414 !important;
+  background-attachment: fixed;
+  box-shadow: inset 5px 0px 0px 0px rgba(179, 179, 179, 0.7);
+}
+.nav-link{
+  color: #ccc !important;
+}
+     .a :hover{
+      background-color: black;
+      color: white;
+    }
+    .nav-item {
+            position: relative; 
+        }
+.sub-menu {
+    display: none;
+    position: absolute !important;
+    top: 100%; 
+    left: 25%;
+    font-weight: 300;
+    align-items: center;
+    align-self: auto;
+    z-index: 9999;
+    margin-left: 0% !important;
+    background-color: #303030;
+    color: rgb(255, 255, 255) !important;
+}
+.nav-item:hover .sub-menu {
+            display: block;
+        }
+.sidenav .sub-menu a:hover {
+            color: #f1f1f1;
+            border-radius: 10px;
+            background-color: black;
+        }
+.navbar-vertical.navbar-expand-xs .navbar-collapse {
+    height: calc(100vh - 100px);
+}
+h5{
+  margin-left: 5px;
+  padding: 2px;
+}
+ .position-relative {
+      position: relative;
+    }
+    .position-absolute {
+      position: absolute;
+    }
+    .password-container {
+      position: relative;
+      width: 100%;
+    }
+    .password-container input {
+      width: 100%;
+      padding-right: 40px; /* Adjust padding to make space for the icon */
+    }
+    .password-container .fa-eye, 
+    .password-container .fa-eye-slash {
+      position: absolute;
+      top: 50%;
+      right: 10px; /* Adjust right position as needed */
+      transform: translateY(-50%);
+      cursor: pointer;
+    
+    }
+    /* Ensure the Select2 dropdown doesn't exceed the screen width */
+.select2-dropdown {
+    max-width: 100%;  /* Constrain the dropdown to the screen width */
+}
+/* Adjust Select2 input field for a consistent appearance */
+.select2-container--default .select2-selection--single {
+    height: 40px;            /* Adjust height */
+    border-radius: 4px;      /* Round the corners */
+    border: 1px solid #ccc;  /* Add a border */
+    padding: 5px 10px;       /* Add padding */
+}
+.non-selectable {
+    cursor: not-allowed; /* Show not-allowed cursor for non-selectable rows */
+    opacity: 0.5; /* Make non-selectable rows appear faded */
+}
+  </style>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/html" href="https://cdn.datatables.net/buttons/2.0.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" type="text/html" href="assets/vendors/fontawesome/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script type="text/html" src="https://cdn.datatables.net/buttons/2.0.2/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/html" href="https://cdn.datatables.net/buttons/2.0.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/html" href="/resources/demos/style.css">
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-LdixNwFokTj/1pyvMzqp+6E5B8wBDsg4Qf38dltEsunHFRXvZWY8ij20pZg8r59EGzdpW0a3xFui2KYNH5oajw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/fixedcolumns/3.3.3/css/fixedColumns.dataTables.min.css">
+  <script type="text/javascript" src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.19/jspdf.plugin.autotable.min.js"></script>
+  </head>
+
+<script>
+
+  
+  // Wait for the DOM to fully load before running the script
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the current date
+    const today = new Date();
+
+    // Format the date to YYYY-MM-DD for the input field
+    const formattedDate = formatDate(today);
+
+    // Set the value of the input to the formatted date
+    document.getElementById('saledate').value = formattedDate;
+  });
+
+  function formatDate(dateObject) {
+    const date = new Date(dateObject);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // Add 1 to get correct month
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Return the date in DD-MM-YYYY format
+    return `${day}-${month}-${year}`;
+  }
+
+  // Toggle function for truncating and expanding text
+  function toggleText(element) {
+    if (element.classList.contains('truncated')) {
+      element.classList.remove('truncated');
+      element.classList.add('full-text');
+    } else {
+      element.classList.remove('full-text');
+      element.classList.add('truncated');
+    }
+  }
+
+  // Attach this function to each dynamically generated product name cell
+  document.querySelectorAll('#customerTable td:nth-child(2)').forEach(function (cell) {
+    cell.onclick = function () {
+      toggleText(this);
+    };
+  });
+
+     
+
+</script>
+{{!-- <script>
+  // Wait for the DOM to fully load before running the script
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the current date
+    const today = new Date();
+
+    // Format the date to YYYY-MM-DD for the input field
+    const formattedDate = formatDate(today);
+
+    // Set the value of the input to the formatted date
+    document.getElementById('supplierinvoicedate').value = formattedDate;
+  });
+
+  function formatDate(dateObject) {
+    const date = new Date(dateObject);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // Add 1 to get correct month
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Return the date in DD-MM-YYYY format
+    return `${day}-${month}-${year}`;
+  }
+</script> --}}
+
+<script>
+  $(document).ready(function () {
+    $('.dropdown2').each(function () {
+      $(this).select2({
+        placeholder: 'Select an option',                 // Static placeholder for all dropdowns
+        allowClear: true,                                // Allow clearing the selection
+        width: '100%',                                   // Ensure it fits within the form
+        dropdownAutoWidth: true,                         // Adjust dropdown width automatically
+        minimumResultsForSearch: 1,                      // Always show the search box
+        matcher: function (params, data) {                // Custom matcher to allow partial and case-insensitive search
+          if ($.trim(params.term) === '') {
+            return data;
+          }
+
+          if (typeof data.text === 'undefined') {
+            return null;
+          }
+
+          if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+            return data;
+          }
+
+          return null;
+        }
+      });
+    });
+  });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var currentPageUrl = window.location.href;
+
+    // Get all navigation links
+    var navLinks = document.querySelectorAll('.navbar-nav .nav-link, .sub-menu .nav-link');
+
+    // Loop through each link
+    navLinks.forEach(function(link) {
+        var linkUrl = link.getAttribute('href');
+
+        if (currentPageUrl.endsWith(linkUrl)) {
+            link.closest('li').classList.add('active');
+        }
+    });
+});
+
+
+        window.addEventListener('load', () => {
+            const loadingLine = document.querySelector('.loading-line');
+            if (loadingLine) {
+                setTimeout(() => {
+                    loadingLine.remove();
+                }, 2000); // Remove after 2 seconds (adjust as needed)
+            }
+        });
+
+  fetch('/auth/sidebar/companyTitle')
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const companyDetails = data.companyDetails;
+
+        // Destructure the company details for clarity
+        const {
+          companyName,
+          gstin,
+          address,
+          city,
+          state,
+          mobileNo,
+          quotes,
+          dl1,
+          dl2
+        } = companyDetails;
+
+        // Update the DOM elements
+        document.getElementById('companyTitle').textContent = companyDetails.companyName || "Not Available";
+        document.getElementById('id').textContent = companyDetails.billNo || "Not Available";
+        document.getElementById('gstin').textContent = gstin || "Not Available";
+        document.getElementById('mobileNo').textContent = mobileNo || "Not Available";
+
+        document.getElementById('dl1').textContent = dl1 || "Not Available";
+        document.getElementById('dl2').textContent = dl2 || "Not Available";
+
+        document.getElementById('address').textContent = address || "Not Available";
+        document.getElementById('city').textContent = city || "";
+        document.getElementById('state').textContent = state || "";
+
+        document.getElementById('quotes').style.display = 'block';
+      } else {
+        console.error('Error fetching company details:', data.message);
+      }
+    })
+    .catch(error => console.error('Error fetching company details:', error));
+
+
+</script>    
+<script type="text/javascript">
+  (function () {
+    var idleTime = 0;
+    var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
+    document.onscroll = resetTimer;
+    document.onclick = resetTimer;
+
+    function resetTimer() {
+      idleTime = 0;
+    }
+
+    function timerIncrement() {
+      idleTime++;
+       console.log('Idle time (minutes):', idleTime);
+      if (idleTime >= 60) { // 60 minutes
+        window.location.href = '/logout';
+      }
+    }
+
+  })();
+
+</script>
+
+
+
+
+
+ 
+ 

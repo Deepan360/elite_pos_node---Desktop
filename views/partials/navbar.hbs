@@ -1,0 +1,63 @@
+<nav class="navbar  navbar-main navbar-expand-lg p-2 bg-alter text-white navbar-fixed px-0 mx-4 shadow-none border-radius-xl"   id="navbarBlur" data-scroll="false">
+
+  <div class="container-fluid py-1 px-3">
+ 
+    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+      <ul class="navbar-nav justify-content-end align-items-center">
+        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+          <a href="javascript:;" class="nav-link  p-0"  id="iconNavbarSidenav">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line bg-white"></i>
+              <i class="sidenav-toggler-line bg-white"></i>
+              <i class="sidenav-toggler-line bg-white"></i>
+            </div>
+          </a>
+        </li>
+        <li class=" d-flex align-items-center "> 
+          <img src="" alt="Company Profile Pic" id="companyLogo" class="company-profile-pic"> 
+          <h3 id="companyTitle" class=" text-white mb-0 ml-2   " ></h3> 
+        </li>
+      </ul>
+    </div>
+  <bold class=" justify-content-end ms-auto text-white  mb-0 ml-2 text-md bold " >Access : <span  id="roles"></span></bold>
+</div>
+  </div>
+  <div class="justify-content-end"  >
+    <i class="fa-solid fa-right-from-bracket fa-xl" data-toggle="tooltip" data-delay="0" data-placement="bottom" id="logoutIcon" title="Logout"></i>
+  </div>
+      <div>
+</nav>
+<body class="bg-main">
+  
+</body>
+<style>
+.company-profile-pic {
+  width: auto;
+  height: 50px;
+  object-fit: cover;
+  
+  margin-right: 10px;
+}
+</style>
+<script>
+    document.getElementById("logoutIcon").addEventListener("click", async () => {
+        try {
+          const response = await fetch("/auth/logout", {
+            method: "GET", // You can also use POST if required
+            credentials: "same-origin" // Ensures cookies are sent
+          });
+
+          if (response.redirected) {
+            window.location.href = response.url; // Redirect to login page
+          } else {
+            alert("Logout failed. Please try again.");
+          }
+
+          // Clear client-side storage
+          sessionStorage.clear();
+          localStorage.clear();
+        } catch (error) {
+          console.error("Logout error:", error);
+        }
+      });
+</script>

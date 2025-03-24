@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>header}}
+    <style>
+        #manufacturerform {
+            display: block;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #8f8f8f; 
+            padding: 20px;
+            z-index: 1000; 
+            border-radius: 10px;
+        }
+        .editForm {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #8f8f8f;
+            padding: 20px;
+            z-index: 1000;
+            border-radius: 10px;
+        }
+        .container {
+            margin-left: 20%;
+        }
+        .updateManufacturer,
+        .closeForm {
+            background-color: rgba(50, 141, 168) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 3px !important;
+            width: 80px !important;
+            height: 30px !important;
+        }
+        button {
+            margin: 1px;
+        }
+        #message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff; 
+            color: black;
+            padding: 20px;
+            z-index: 1000; 
+            size: 200px;
+            font-weight: 700;
+            justify-content: space-between;
+            align-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3) !important; 
+            border-radius: 8px; 
+            overflow: hidden; 
+        }
+        form input {
+            margin: 2px;
+        }
+        form button {
+            width: 100px !important;
+            padding: 5px;
+            margin: 5px;  
+        }
+        .col input {
+            width: 100%;
+        }
+        input[type=checkbox] {
+            width: 100px;
+            color: #8f8f8f !important;
+        }
+        .align-right-top {
+            position: absolute !important;
+            top: 0 !important;
+            right: 0 !important; 
+            margin: 10px !important; 
+        }
+    </style>
+</head>
+<body class="g-sidenav-show bg-gray-100">
+    {{>sidebar}}
+    <main class="main-content position-relative border-radius-lg">
+        {{>navbar}}
+        <div class="table-responsive container-fluid py-4">
+            <div class="form-control card">
+                <h3>Purchase Register</h3>
+                <div>  <a href="/purchase"><i class="fa-solid fa-file-circle-plus fa-2x"></i></a></div>
+                <div class="align-right-top">
+                    <div id="filterDateDiv" class="mb-3">
+                        <label for="fromDate">From Date:</label>
+                        <input type="text" id="fromDate">
+                        <label for="toDate">To Date:</label>
+                        <input type="text" id="toDate">
+                        <button class="btn btn-primary" id="filter-button">Filter</button>
+                        <button class="btn btn-primary" id="clear-button">Clear</button>
+                    </div>
+                </div>
+                <form action="/auth/customer" method="get">
+                    <table id="customerTable" class="table-responsive justify-content-between align-items-end" style="width:100% !important">
+                        <thead>
+                            <tr>
+                                <th>Bill No</th>
+                                <th>Bill Date</th>
+                                <th>Supplier</th>
+                                <th>Inv NO</th>
+                                <th>Supp Inv Date</th>
+                                <th>Sub Total</th>
+                                <th>Total Amount</th>
+                                <th>Disc.Mode</th>
+                                <th>Discount</th>
+                                <th>Payment Mode</th>
+                                <th>Payment Status</th>
+                                <th>Paid Amount</th>
+                                <th>Payable Amount</th>
+                                <th>Age Days</th>
+                                <th>Payment</th>
+                                <th class="action">Action</th>
+                                <th>Print</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+            <tfoot>
+                <tr id="totalAmountRow" style="display: none;">
+                    <td style="text-align: left; font-weight: bold; color: #34495E;">Total Amount:<span id="totalAmountDisplay"
+                            style="text-align: left; font-weight: bold; color: #34495E;">0.00</span></td>
+            
+            
+                </tr>
+            </tfoot>
+                    </table>
+                </form>
+            </div>
+        </div>
+            {{>footer}}
+    </main>
+    {{>color}}
+
+<script>
+
+     document.getElementById("clear-button").addEventListener("click", function () {
+            clearFilters();
+            $('#totalAmountRow').hide();
+            table.ajax.reload(); // Corrected to use table.ajax.reload() to refresh the DataTable
+        });
+
+
+            function clearFilters() {
+                var table = document.getElementById("customerTable");
+                var rows = table.getElementsByTagName("tr");
+
+                for (var i = 1; i < rows.length; i++) {
+                    rows[i].style.display = "";
+                }
+
+                // Check if noDataRow is defined before accessing it
+                var noDataRow = document.getElementById("noDataRow");
+                if (noDataRow) {
+                    noDataRow.style.display = "none";
+                }
+
+                // Clear the values of the input fields
+                document.getElementById("fromDate").value = "";
+                document.getElementById("toDate").value = "";
+            }
+
+            $(document).ready(function () {
+
+
+                // Filter by Date and Sum Total Amount
+                document.getElementById("filter-button").addEventListener("click", function () {
+
+                    var fromDate = new Date(document.getElementById("fromDate").value);
+                    var toDate = new Date(document.getElementById("toDate").value);
+                    var totalAmountSum = 0;
+
+                    table.rows().every(function () {
+                        var row = this.node();
+                        var billDateText = $(row).find("td").eq(1).text().trim();
+                        var totalAmountText = $(row).find("td").eq(6).text().trim();
+                        var cellDate = moment(billDateText, "DD-MM-YYYY");
+
+                        if (cellDate.isSameOrAfter(moment(fromDate)) && cellDate.isSameOrBefore(moment(toDate))) {
+                            $(row).show();
+                            totalAmountSum += parseFloat(totalAmountText.replace(/[^0-9.-]+/g, "")) || 0;
+                        } else {
+                            $(row).hide();
+                        }
+                    });
+
+                    // Display the updated total amount
+                    $('#totalAmountRow').show();
+                    $('#totalAmountDisplay').text(totalAmountSum.toFixed(2));
+                });
+            });
+        
+
+</script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var messageElement = document.getElementById('message');
+
+    if (messageElement) {
+        setTimeout(function () {
+            messageElement.style.display = 'none';
+        }, 1000); 
+    }
+});
+  </script>
+    <script>
+
+        $(document).on('click', '#addmanufacturer', function() {
+        $("#manufacturerform").show();
+        $("#id").val('');
+    });
+   var table = $("#customerTable").DataTable({
+    dom: 'Bfrtip',
+    buttons: ['copy', 'excel', 'pdf', 'csv'],
+    paging: false,
+    scrollY: '500px',
+    scrollX: '100px',
+    scrollCollapse: true,
+    responsive: true,
+    "bInfo": true, // Show information (records, etc.)
+    "bBorders": true, // Show borders
+    ajax: {
+        url: '/auth/purchaseregister',
+        type: 'GET', // or 'POST' depending on your server-side implementation
+        dataType: 'json',
+        dataSrc: 'data' // Change 'data' to match your server's response structure
+    },
+     order: [[0, 'desc']],
+       columns: [
+           { data: 'id' },
+           {
+               data: 'purchasedate',
+               render: function (data) {
+                   return moment(data).format("DD-MM-YYYY"); // Format date for purchasedate
+               }
+           },
+           {
+               data: 'suppliername',
+               render: function (data, type, row) {
+                   return data[1]; // Return the supplier name if it's an array or object
+               }
+           },
+           {data:'supplierinvoiceno'},
+           {
+               data: 'supplierinvoicedate',
+               render: function (data) {
+                   return moment(data).format("DD-MM-YYYY"); // Format date for supplier invoice
+               }
+           },
+           { data: 'amount' }, // Display the amount
+           { data: 'subtotal' }, // Display the subtotal
+           { data: 'discModes' }, // Display discount modes
+           { data: 'discount' }, // Display discount
+           { data: 'paymentmode' }, // Payment mode display
+
+           {
+               data: 'paymentmode',
+               render: function (data) {
+                   // If payment mode is 'credit', show 'Unpaid', otherwise 'Paid'
+                   return data === 'credit' ? 'Unpaid' : 'Paid';
+               }
+           },
+           {
+               data: 'subtotal',
+               render: function (data, type, row) {
+                   // If payment mode is 'credit', show the subtotal, otherwise show '0.00'
+                   return row.paymentmode === 'credit' ? '0.00' : data;
+               }
+           },
+           {
+               data: 'subtotal',
+               render: function (data, type, row) {
+                   // If payment mode is 'cash', show '0.00', otherwise show subtotal
+                   return row.paymentmode === 'cash' ? '0.00' : data;
+               }
+           },
+          {
+               data: 'supplierinvoicedate',
+               render: function (data, type, row) {
+                   const purchaseDate = moment(data);
+                   const today = moment();
+                   const daysDiff = today.diff(purchaseDate, 'days');
+
+                   if (daysDiff === 0) {
+                       return '0 days'; // If it's today, display 0 days
+                   } else if (daysDiff > 0) {
+                       return `${daysDiff} days`; // For past dates
+                   } else {
+                       return `${Math.abs(daysDiff)} days from today`; // For future dates
+                   }
+               }
+           }
+
+, {
+               data: 'id',
+               render: function (data, type, row) {
+                   // If payment mode is 'credit', show a credit card icon; otherwise, show the id
+                   return row.paymentmode === 'credit' ? '<i class="fa-solid fa-credit-card text-danger fa-2x" type="button" data-id="' + data + '"></i>' : '<i class="fa-solid fa-clipboard-check text-success fa-2x"></i>';
+               }
+           }
+,
+           {
+               data: 'id',
+               render: function (data) {
+                   // Render an edit icon with the ID attached
+                   return '<i class="fa-solid fa-file-pen text-warning fa-2x" type="button" data-id="' + data + '"></i>';
+               }
+           },
+           {
+               data: 'id',
+               render: function (data, type, row) {
+                   // Render a print icon with the ID attached
+                   return '<i class="fa-solid fa-print text-info fa-2x" type="button" data-id="' + data + '"></i>';
+               }
+           }
+       ]
+
+
+});
+
+
+$('#customerTable').on('click', 'i.fa-file-pen', function() {
+    var purchaseId = $(this).data('id');
+    console.log('Purchase ID:', purchaseId); // Debugging
+    window.location.href = '/purchase?id=' + purchaseId;
+}); 
+$('#customerTable').on('click', 'i.fa-print', function() {
+    var purchaseId = $(this).data('id');
+    console.log('Purchase ID:', purchaseId); // Debugging
+    window.location.href = '/purchaseprintpage?id=' + purchaseId;
+});
+
+        if (table.rows().count() === 0) {
+            $("#emptyMessage").show();
+        }
+    </script>
+
+</body>
+</html>
+ <script>
+  $( function() {
+    $( "#fromDate" ).datepicker();
+  } );
+  </script>
+ <script>
+  $( function() {
+    $( "#toDate" ).datepicker();
+  } );
+  </script>
+    <script>
+          $("#closeForm").click(function() {
+            $(".editForm").hide();
+        });
+    </script>

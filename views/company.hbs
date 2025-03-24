@@ -1,0 +1,404 @@
+<head>
+ {{>header}}
+
+  <style>
+    #logoPreview {
+    display: none;
+    max-width: 200px;
+    max-height: 200px;
+}
+
+    #contraForm {
+
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #8f8f8f;
+      padding: 20px;
+      z-index: 1000;
+      border-radius: 10px;
+      justify-content: space-between;
+      align-content: space-between;
+      align-items: center;
+    }
+
+    #contraForm input {
+      margin: 2px;
+      padding: 2px;
+    }
+
+    #contraForm select {
+      margin: 2px;
+      padding: 2px;
+    }
+
+    #contraForm button {
+      width: fit-content;
+      margin: 2px;
+    }
+
+    .dt-button {
+      margin-bottom: 2px;
+      /* Adjust margin as needed */
+      background-color: aqua;
+    }
+
+    .editBtn {
+      width: fit-content;
+      color: rgb(141, 64, 214);
+      margin: 2px;
+      padding: 2px;
+      align-items: center;
+
+    }
+
+    .deleteBtn {
+      width: fit-content;
+      color: rgb(224, 47, 47);
+      margin: 2px;
+      padding: 2px;
+      align-items: center;
+    }
+
+ 
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .btn {
+      margin: 5px;
+      justify-content: space-around;
+      width: 100px;
+      padding: 5px;
+      align-content: center;
+    }
+
+    th,
+    td {
+      border: 0px ;
+      text-align: left;
+      padding: 5px;
+    }
+    table tbody tr {
+    border: 0px solid #ffffff !important;
+    box-sizing: border-box !important;
+    padding: 10px !important;
+}
+
+   table input {
+      width: 100%;
+      /* Make the input box take 100% width of its container */
+      box-sizing: border-box;
+      /* Include padding and border in the width */
+      vertical-align: middle;
+      /* Align the input vertically in the middle */
+      font-size: small;
+    }
+    table tbody tr td {
+    text-wrap:wrap  !important; 
+}
+
+table tbody tr td {
+    text-align: left !important; 
+}
+  </style>
+ 
+</head>
+
+<body class="g-sidenav-show   bg-gray-100">
+ {{>sidebar}}
+  <main class="main-content position-relative border-radius-lg ">
+  {{>navbar}}
+    <div class="table-responsive container-fluid py-4  ">
+      <div class="form-control card   " style="width: 100%;">
+<form action="/auth/company" method="post" id="company" enctype="multipart/form-data">
+
+        <h3>Company Information</h3>
+       <input type="hidden" name="id" id="id" value="1">
+        <table class="table-responsive justify-content-between align-items-end" >
+
+          <tr>
+          <tr>
+            <td> <label for="companyName">Company Name:</label>
+              <input type="text" id="companyName" name="companyName" required>
+            </td>
+            <td> <label for="billingName">Billing Name:</label>
+              <input type="text" id="billingName" name="billingName" required>
+            </td>
+            <td> <label for="address">Address:</label>
+              <input type="text" id="address" name="address" required>
+            </td>
+
+          </tr>
+
+          <tr>
+               <td> <label for="city">City:</label>
+             <input type="text" id="city" name="city" autocomplete="off" required>
+            </td>
+            <td> <label for="state">State:</label>
+              <input type="text" id="state" name="state" required>
+            </td>
+            <td><label for="pincode">Pincode:</label>
+              <input type="text" id="pincode" name="pincode" required>
+            </td>
+
+          </tr>
+
+          <tr>
+            <td> <label for="cin">CIN:</label>
+              <input type="text" id="cin" name="cin">
+            </td>
+            <td> <label for="tin">TIN:</label>
+              <input type="text" id="tin" name="tin">
+            </td>
+            <td> <label for="gstin">GSTIN:</label>
+              <input type="text" id="gstin" name="gstin">
+            </td>
+
+          </tr>
+
+          <tr>
+            <td> <label for="pan">PAN:</label>
+              <input type="text" id="pan" name="pan">
+            </td>
+            <td> <label for="mobileNo">Mobile No:</label>
+              <input type="text" id="mobileNo" name="mobileNo" required>
+            </td>
+            <td> <label for="phoneNo">Phone No:</label>
+              <input type="text" id="phoneNo" name="phoneNo">
+            </td>
+
+
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email">
+            </td>
+            <td> <label for="website">Website:</label>
+              <input type="url" id="website" name="website">
+            </td>
+            <td> <label for="cashLedger">Cash Ledger:</label>
+              <input type="text" id="cashLedger" name="cashLedger">
+            </td>
+            </td>
+          </tr>
+          <tr>
+            <td> <label for="bankLedger">Bank Ledger:</label>
+              <input type="text" id="bankLedger" name="bankLedger">
+            </td>
+            <td> <label for="bookStartDate">Book Start Date:</label>
+              <input type="date" id="bookStartDate" name="bookStartDate">
+            </td>
+            <td>
+              <label for="discLedger">Disc Ledger:</label>
+              <input type="text" id="discLedger" name="discLedger">
+          </tr>
+          </tr>
+<tr>
+            <td colspan="1">
+                <label for="logo">Company Logo:</label>
+                <input type="file" id="logo" name="logo" accept="image/*" onchange="previewLogo(event)">
+             
+            </td>
+              <td colspan="1">
+              <label for="quotes">Quotes:</label>
+              <input type="text" name="quotes" id="quotes">
+            </td>
+                    <td colspan="1">
+                      <label for="dl1">Drug Licence 1:</label>
+                      <input type="dl1" name="dl1" id="dl1">
+                    </td>
+        </tr>
+        <tr>
+                <td>
+                  <img id="logoPreview" src="" alt="Preview" style="max-width: 100px; max-height: 100px; display: none;">
+                
+                </td>
+                <td colspan="1">
+                  <label for="dl2">Drug Licence 2:</label>
+                  <input type="dl2" name="dl2" id="dl2">
+                </td>
+   
+        </tr>
+        </table>
+       <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+      </div>
+    </div>
+  {{>footer}}
+
+  </main>
+
+  {{>color}}
+
+ <script>
+    var id = '';
+    var table = $('#contraTable').DataTable({
+      dom: 'Bfrtip',
+      buttons: ['copy', 'excel', 'pdf', 'csv'],
+      scrollY: '400px',
+      scrollX: '300px',
+      paging: false,
+      scrollCollapse: true,
+    });
+
+var companyId = '1';
+
+$.ajax({
+    url: '/auth/company/getcompany',
+    method: 'GET',
+    data: { id: companyId },
+    dataType: 'json',
+    success: function (response) {
+        // Populate the form fields with the fetched data
+        if (response.data && response.data.length > 0) {
+            var companyDetails = response.data[0];
+            $('#companyName').val(companyDetails.companyName);
+            $('#billingName').val(companyDetails.billingName);
+            $('#address').val(companyDetails.address);
+            $('#city').val(companyDetails.city);
+            $('#state').val(companyDetails.state);
+            $('#pincode').val(companyDetails.pincode);
+            $('#cin').val(companyDetails.cin);
+            $('#tin').val(companyDetails.tin);
+            $('#gstin').val(companyDetails.gstin);
+            $('#pan').val(companyDetails.pan);
+            $('#mobileNo').val(companyDetails.mobileNo);
+            $('#phoneNo').val(companyDetails.phoneNo);
+            $('#email').val(companyDetails.email);
+            $('#website').val(companyDetails.website);
+            $('#cashLedger').val(companyDetails.cashLedger);
+            $('#bankLedger').val(companyDetails.bankLedger);
+            $('#bookStartDate').val(companyDetails.bookStartDate);
+            $('#discLedger').val(companyDetails.discLedger);
+            $('#quotes').val(companyDetails.quotes);
+             $('#dl1').val(companyDetails.dl1);
+              $('#dl2').val(companyDetails.dl2);
+            if (companyDetails.logo) {
+            // Assuming response contains logoSrc for each company row
+            $('#logoPreview').attr('src', companyDetails.logoSrc);
+            $('#logoPreview').show();
+        } else {
+            console.error('No logo URL found in company details.');
+            $('#logoPreview').hide();
+        }
+    } else {
+        console.error('No company details found in the response.');
+    }
+    },
+    error: function (xhr, status, error) {
+        console.error('Error fetching company details:', error);
+    }
+});
+
+
+
+$.ajax({
+    url: '/auth/company/getcity',
+    method: 'GET',
+    success: function (response) {
+        console.log('Received response for type:', response);
+        var options = response.data;
+
+        if (options && options.length) {
+            var cityNames = options.map(option => option.city);
+
+            $('#city').autocomplete({
+                source: cityNames,
+                minLength: 1,
+                select: function (event, ui) {
+                    var selectedCity = ui.item.value;
+
+                    var selectedState = options.find(option => option.city === selectedCity).state;
+
+                    $('#state').val(selectedState);
+                },
+                open: function (event, ui) {
+                    var menu = $(this).autocomplete("widget");
+                    var maxHeight = 200; 
+                    menu.css({
+                        "max-height": maxHeight,
+                        "overflow-y": "auto"
+                    });
+                }
+            });
+        } else {
+            console.error('No options found for Supplier Ledger(dr)');
+        }
+    },
+    error: function (xhr, status, error) {
+        console.error('Error fetching options for Supplier Ledger(dr):', error);
+    }
+});
+
+
+
+$(document).ready(function () {
+    $('#company').on('submit', function (event) {
+        event.preventDefault();
+
+        var logoFile = $('#logo')[0].files[0]; 
+        if (!logoFile) {
+            console.error('No file selected');
+            
+        }
+
+        var formData = new FormData(this);
+
+        var companyId = $('#id').val();
+
+        if (!companyId) {
+            console.error('Company ID not found');
+            return;
+        }
+
+        formData.append('id', companyId);
+
+        console.log('Form data with file:', formData);
+
+        $.ajax({
+            url: '/auth/company/updatecompany',
+            method: 'PUT',
+            data: formData,
+            processData: false, 
+            contentType: false,  
+            success: function (response) {
+                console.log('Received response for update:', response);
+                alert('Successfully Submitted');
+            },
+            error: function (xhr, status, error) {
+                console.error('Error updating company details:', error);
+                alert('Error updating company details. Please try again.');
+            }
+        });
+    });
+});
+
+        function previewLogo(event) {
+            var input = event.target;
+            var preview = document.getElementById('logoPreview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        }
+  </script>
+
+  
+</body>
+
+</html>
