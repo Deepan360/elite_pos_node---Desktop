@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . MyApp --platform=win32 --arch=x64 --out=dist"
+    "build": "electron-packager . MyApp --platform=win32 --arch=x64 --out=dist",
+    "publish": "electron-packager . MyApp --platform=win32 --arch=x64 --out=dist --asar --overwrite --ignore=node_modules/electron-*"
   },
   "devDependencies": {
     "electron": "^35.0.3",
@@ -37,6 +38,7 @@
     "routes": "^2.1.0",
     "tedious": "^18.3.0",
     "ua-parser-js": "^1.0.37",
+    "update-electron-app": "^3.1.1",
     "user-agent": "^1.0.4",
     "uuid": "^9.0.1",
     "winston": "^3.13.0"

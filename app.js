@@ -96,6 +96,7 @@ serverApp.listen(PORT, () => {
 
 // Electron setup
 let mainWindow;
+
 app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
     width: 1200,
